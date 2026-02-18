@@ -16,6 +16,8 @@ import UserProfilePage from "./pages/UserProfilePage";
 import HomePage from "./pages/HomePage"
 import LeaderboardPage from "./pages/LeaderboardPage";
 
+import ProtectedRoute from "./components/Protectedroute";
+
 function App() {
   return (
     <BrowserRouter>
@@ -35,10 +37,12 @@ function App() {
         <Route path="/questions/:id" element={<QuestionDetailsPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/tags" element={<TagsPage />} />
-        <Route path="/users/:id" element={<UserProfilePage />} />
         <Route path="/tags" element={<TagsPage />} />
         <Route path="/tags/:tag" element={<TagsPage />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
+
+        {/* PROTECTED USER PROFILE PAGE */}
+        <Route path="/users/:id" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

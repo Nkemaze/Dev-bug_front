@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import API from "../api/api";
+import { useLoading } from "../context/Loadingcontext";
 
 const LeaderboardPage = () => {
   const [users, setUsers] = useState([]);
+  const { startLoading, stopLoading } = useLoading();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        startLoading(); // Start global loader
         const res = await API.get("/users/top");
         setUsers(res.data); // backend already sorts by reputation
       } catch (err) {
         console.error("Failed to load leaderboard", err);
+      }finally{
+        stopLoading(); // Stop global loader
       }
     };
 

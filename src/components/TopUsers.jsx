@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
+import { useLoading } from "../context/Loadingcontext";
 
 const TopUsers = () => {
   const [users, setUsers] = useState([]);
+  const { startLoading, stopLoading } = useLoading();
 
   useEffect(() => {
     const fetchTopUsers = async () => {
       try {
+        startLoading(); // Start global loader
+
         const res = await API.get("/users/top");
         setUsers(res.data);
       } catch (err) {
         console.error("Failed to load top users");
+      }finally{
+        stopLoading();
       }
     };
 

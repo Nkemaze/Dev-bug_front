@@ -6,6 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,11 +16,14 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
+      setLoading(true);
       const res = await API.post("/auth/login", formData);
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,7 +35,11 @@ const Login = () => {
         <div className="w-full md:w-1/2 p-8">
           <h2 className="text-2xl font-bold mb-6">Welcome Back!</h2>
 
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {error && (
+            <div className="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -74,9 +82,10 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 

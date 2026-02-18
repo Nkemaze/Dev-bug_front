@@ -52,7 +52,7 @@ const Register = () => {
           <h2 className="text-2xl font-bold mb-6">Create Account</h2>
 
           {error && (
-            <div className="mb-4 text-red-600 bg-red-50 p-2 rounded">
+            <div className="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
               {error}
             </div>
           )}
@@ -117,7 +117,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+              className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating account..." : "Register"}
             </button>

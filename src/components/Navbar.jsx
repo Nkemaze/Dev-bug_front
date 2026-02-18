@@ -4,15 +4,22 @@ import { Link } from "react-router-dom";
 import API from "../api/api";
 
 const Navbar = ({ onMenuClick }) => {
-  const [user, setUser] = useState(null); // ✅ object or null
+  const [user, setUser] = useState(null); // object or null
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
+      const token = localStorage.getItem("token");
+      
+      // Only fetch if token exists
+      if (!token) {
+        setUser(null);
+        return;
+      }
       try {
         const res = await API.get("/users/me");
-        setUser(res.data.user); // ✅ correct
+        setUser(res.data.user); //  correct
       } catch (err) {
-        console.log("User not logged in");
+        // console.log("User not logged in");
         setUser(null);
       }
     };
@@ -64,7 +71,7 @@ const Navbar = ({ onMenuClick }) => {
           </div>
         </Link>
       ) : (
-        <Link to="/login" className="font-medium text-blue-600">
+        <Link to="/login" className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
           Login
         </Link>
       )}

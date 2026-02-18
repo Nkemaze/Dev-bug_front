@@ -1,18 +1,29 @@
 import { Home, Tag, Trophy, HelpCircle, X, LogOut } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useLoading } from "../context/Loadingcontext";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const { startLoading, stopLoading } = useLoading();
   const linkBase =
     "flex items-center gap-4 px-4 py-2 rounded-lg font-medium transition";
 
-  // ✅ Logout function
-  const handleLogout = () => {
+  // Logout function
+  const handleLogout = async () => {
+    startLoading();
+    
+    // Show loading animation for 1.5 seconds before redirecting
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
     localStorage.removeItem("token"); // remove JWT
-    // Optional: remove other user info from localStorage
-    // localStorage.removeItem("user");
-    navigate("/login"); // redirect to login page
+    localStorage.removeItem("user"); // remove user info if stored
+    
+    stopLoading();
+    navigate("/login", { replace: true }); // redirect to login page and replace the previos page
   };
+
+  const isLoggedIn = localStorage.getItem("token");
+
 
   return (
     <aside
@@ -78,16 +89,29 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       {/* LOGOUT */}
       <div className="p-4 border-t">
-        <button
-          onClick={() => {
-            handleLogout();
-            onClose(); // close sidebar
-          }}
-          className="w-full bg-blue-700 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-800"
-        >
-          <LogOut size={18} /> Log Out
-        </button>
+        {isLoggedIn ? (
+          <button
+            onClick={() => {
+              handleLogout();
+              onClose();
+            }}
+            className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-800"
+          >
+            <LogOut size={18} /> Log Out
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              onClose();
+              navigate("/register");
+            }}
+            className="w-full bg-green-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700"
+          >
+            Sign Up for free
+          </button>
+        )}
       </div>
+
     </aside>
   );
 };

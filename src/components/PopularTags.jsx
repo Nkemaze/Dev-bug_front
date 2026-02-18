@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
+import { useLoading } from "../context/Loadingcontext";
 
 const PopularTags = () => {
   const [tags, setTags] = useState([]);
+  const { startLoading, stopLoading } = useLoading();
 
   useEffect(() => {
     const fetchTags = async () => {
       try {
+        startLoading();
+
         const res = await API.get("/tags/popular");
         setTags(res.data);
       } catch (err) {
         console.error("Failed to load tags");
+      }finally{
+        stopLoading();
       }
     };
 
