@@ -1,6 +1,7 @@
 import { Home, Tag, Trophy, HelpCircle, X, LogOut } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useLoading } from "../context/Loadingcontext";
+import logo from "../assets/logo.png";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     >
       {/* MOBILE HEADER */}
       <div className="md:hidden flex items-center justify-between p-4 border-b">
-        <span className="font-bold text-blue-600">Developer Bug Zone</span>
+        <span className="font-bold text-blue-600"><img src={logo} alt="Developer Bug Zone Logo" className="h-13 w-40" /></span>
         <button onClick={onClose}>
           <X size={22} />
         </button>

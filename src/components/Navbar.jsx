@@ -2,6 +2,7 @@ import { Menu, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
+import logo from "../assets/logo.png";
 
 const Navbar = ({ onMenuClick }) => {
   const [user, setUser] = useState(null); // object or null
@@ -39,9 +40,9 @@ const Navbar = ({ onMenuClick }) => {
           <Menu size={24} />
         </button>
 
-        <h1 className="text-lg md:text-xl font-bold text-blue-600">
-          Developer Bug Zone
-        </h1>
+        <div className="text-lg md:text-xl font-bold text-blue-600">
+          <img src={logo} alt="Developer Bug Zone Logo" className="h-13 w-40" />
+        </div>
       </div>
 
       {/* SEARCH */}
