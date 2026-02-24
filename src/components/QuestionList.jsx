@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import API from "../api/api";
 import QuestionCard from "./QuestionCard";
-import { useLoading } from "../context/Loadingcontext";
+import { useLoading } from "../context/loadingContext";
 
-const QuestionList = () => {
+const QuestionList = ({ filter }) => {
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState("");
   const { startLoading, stopLoading } = useLoading();
@@ -11,20 +11,20 @@ const QuestionList = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        startLoading(); // Start global loader
+        startLoading();
 
-        const res = await API.get("/questions");
+        const res = await API.get(`/questions?filter=${filter}`);
         setQuestions(res.data);
 
       } catch (err) {
         setError("Failed to load questions");
       } finally {
-        stopLoading(); // Stop global loader
+        stopLoading();
       }
     };
 
     fetchQuestions();
-  }, []);
+  }, [filter]); // 👈 refetch when filter changes
 
   if (error) {
     return <p className="text-center text-red-500">{error}</p>;
@@ -33,7 +33,7 @@ const QuestionList = () => {
   if (!questions.length) {
     return (
       <p className="text-center text-gray-500">
-        No questions yet. Be the first to ask!
+        No questions found for this filter.
       </p>
     );
   }

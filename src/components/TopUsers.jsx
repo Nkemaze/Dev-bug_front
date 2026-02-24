@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
-import { useLoading } from "../context/Loadingcontext";
+import { useLoading } from "../context/loadingContext";
 
 const TopUsers = () => {
   const [users, setUsers] = useState([]);

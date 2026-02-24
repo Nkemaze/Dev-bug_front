@@ -1,11 +1,13 @@
 import { Menu, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../api/api";
 import logo from "../assets/logo.png";
 
 const Navbar = ({ onMenuClick }) => {
   const [user, setUser] = useState(null); // object or null
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -49,11 +51,21 @@ const Navbar = ({ onMenuClick }) => {
       <div className="hidden md:flex flex-1 max-w-xl">
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            className="w-full border rounded-lg pl-10 pr-4 py-2
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim()) navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+            }}
+            className="w-full"
+          >
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full border rounded-lg pl-10 pr-4 py-2
             focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Search questions..."
-          />
+              placeholder="Search questions..."
+            />
+          </form>
         </div>
       </div>
 

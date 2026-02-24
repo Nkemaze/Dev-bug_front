@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import API from "../api/api";
-import { useLoading } from "../context/Loadingcontext";
+import { useLoading } from "../context/loadingContext";
 
 const LeaderboardPage = () => {
   const [users, setUsers] = useState([]);

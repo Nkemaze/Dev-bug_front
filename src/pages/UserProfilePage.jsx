@@ -87,7 +87,7 @@ const UserProfilePage = () => {
       </div>
 
       {/* BADGES */}
-      <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
+      {/* <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
           <Award size={18} />
           Badges
@@ -107,7 +107,7 @@ const UserProfilePage = () => {
         ) : (
           <p className="text-sm text-gray-500">No badges yet</p>
         )}
-      </div>
+      </div> */}
 
       {/* USER QUESTIONS */}
       <section>

@@ -1,6 +1,6 @@
 import { Home, Tag, Trophy, HelpCircle, X, LogOut } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useLoading } from "../context/Loadingcontext";
+import { useLoading } from "../context/loadingContext";
 import logo from "../assets/logo.png";
 
 const Sidebar = ({ isOpen, onClose }) => {

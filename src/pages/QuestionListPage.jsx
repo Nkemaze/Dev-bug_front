@@ -6,11 +6,12 @@ import PopularTags from "../components/PopularTags";
 import { Link } from "react-router-dom";
 
 const QuestionsPage = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("newest");
 
   return (
     <>
       <DashboardLayout>
+
         {/* Header */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -31,42 +32,64 @@ const QuestionsPage = () => {
 
         {/* Filters */}
         <div className="mb-6 flex flex-wrap items-center gap-3">
-          <button className="rounded-full bg-blue-700 px-4 py-1.5 text-sm text-white">
+
+          <button
+            onClick={() => setActiveFilter("newest")}
+            className={`rounded-full px-4 py-1.5 text-sm ${
+              activeFilter === "newest"
+                ? "bg-blue-700 text-white"
+                : "bg-white text-gray-600 border hover:bg-gray-100"
+            }`}
+          >
             Newest
           </button>
-          <button className="rounded-full bg-white px-4 py-1.5 text-sm text-gray-600 border hover:bg-gray-100">
+
+          <button
+            onClick={() => setActiveFilter("active")}
+            className={`rounded-full px-4 py-1.5 text-sm ${
+              activeFilter === "active"
+                ? "bg-blue-700 text-white"
+                : "bg-white text-gray-600 border hover:bg-gray-100"
+            }`}
+          >
             Active
           </button>
-          <button className="rounded-full bg-white px-4 py-1.5 text-sm text-gray-600 border hover:bg-gray-100">
+
+          <button
+            onClick={() => setActiveFilter("unanswered")}
+            className={`rounded-full px-4 py-1.5 text-sm ${
+              activeFilter === "unanswered"
+                ? "bg-blue-700 text-white"
+                : "bg-white text-gray-600 border hover:bg-gray-100"
+            }`}
+          >
             Unanswered
           </button>
-          <button className="rounded-full bg-white px-4 py-1.5 text-sm text-gray-600 border hover:bg-gray-100">
+
+          <button
+            onClick={() => setActiveFilter("votes")}
+            className={`rounded-full px-4 py-1.5 text-sm ${
+              activeFilter === "votes"
+                ? "bg-blue-700 text-white"
+                : "bg-white text-gray-600 border hover:bg-gray-100"
+            }`}
+          >
             Most Votes
           </button>
         </div>
 
         {/* Content grid */}
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-          {/* Questions */}
           <section className="xl:col-span-3 space-y-4">
-            <QuestionList />
+            <QuestionList filter={activeFilter} />
           </section>
 
-          {/* Right sidebar */}
           <aside className="hidden xl:flex xl:flex-col space-y-6">
             <TopUsers />
             <PopularTags />
           </aside>
         </div>
       </DashboardLayout>
-
-
-      <Link to={"/ask"}>
-          {/* Mobile Ask Button */}
-          <button className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-white shadow-lg sm:hidden">
-            +
-          </button>
-      </Link>
     </>
   );
 };
